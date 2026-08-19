@@ -4,6 +4,9 @@ local Window = Library.CreateLib("Farming GUI", "DarkTheme")
 local Main = Window:NewTab("Functions")
 local MainSection = Main:NewSection("Reset Before Teleporting")
 
+-- ============================================
+-- INSTANT CLAIM
+-- ============================================
 
 MainSection:NewToggle("InstantClaim", "Toggle instant claiming", function(state)
 
@@ -42,13 +45,11 @@ MainSection:NewToggle("InstantClaim", "Toggle instant claiming", function(state)
 
 end)
 
-
-
+-- ============================================
 -- PLATFORM POSITION
+-- ============================================
 
 local PlatformPosition = Vector3.new(1800,90,-1597)
-
-
 
 MainSection:NewButton("Set Platform", "Teleport", function()
 
@@ -61,7 +62,9 @@ MainSection:NewButton("Set Platform", "Teleport", function()
 
 end)
 
-
+-- ============================================
+-- TP OUTSIDE JAIL - START
+-- ============================================
 
 MainSection:NewButton("TP Outside Jail - Start", "Teleport", function()
 
@@ -75,7 +78,9 @@ MainSection:NewButton("TP Outside Jail - Start", "Teleport", function()
 
 end)
 
-
+-- ============================================
+-- TP OUTSIDE JAIL - FARM
+-- ============================================
 
 MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and reset", function(state)
 
@@ -92,7 +97,6 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
                 local Character = game:GetService("Players").LocalPlayer.Character
                 local HRP = Character and Character:FindFirstChild("HumanoidRootPart")
 
-
                 if HRP then
 
                     local targetPosition = PlatformPosition
@@ -101,38 +105,28 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
 
                     task.wait(2)
 
-
                     if not _G.AutoTP then
                         break
                     end
 
-
-
                     if (HRP.Position - targetPosition).Magnitude <= 10 then
-
 
                         local args = {
                             [1] = ReplicatedStorage.Interacting,
                             [2] = "Reset"
                         }
 
-
                         ReplicatedStorage.DefinEvents.InstanceRequestFunction:InvokeServer(unpack(args))
-
 
                     end
 
-
                 end
 
-
                 task.wait(1)
-
 
             end
 
         end)
-
 
     else
 
@@ -142,7 +136,9 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
 
 end)
 
-
+-- ============================================
+-- BOARD TP
+-- ============================================
 
 MainSection:NewButton("Board TP", "Teleport", function()
 
@@ -155,12 +151,12 @@ MainSection:NewButton("Board TP", "Teleport", function()
     end
 
 end)
+
 -- ============================================
 -- NORMAL PLAYER JOIN NOTIFIER
 -- ============================================
 
 local Players = game:GetService("Players")
-
 
 local function CreateNotification(player)
 
@@ -169,7 +165,6 @@ local function CreateNotification(player)
     ScreenGui.ResetOnSpawn = false
     ScreenGui.Parent = game:GetService("CoreGui")
 
-
     local Frame = Instance.new("Frame")
     Frame.Size = UDim2.new(0,300,0,90)
     Frame.Position = UDim2.new(1,-320,1,-120)
@@ -177,11 +172,9 @@ local function CreateNotification(player)
     Frame.BorderSizePixel = 0
     Frame.Parent = ScreenGui
 
-
     local Corner = Instance.new("UICorner")
     Corner.CornerRadius = UDim.new(0,10)
     Corner.Parent = Frame
-
 
     local Image = Instance.new("ImageLabel")
     Image.Size = UDim2.new(0,70,0,70)
@@ -194,8 +187,6 @@ local function CreateNotification(player)
         "&width=150&height=150&format=png"
 
     Image.Parent = Frame
-
-
 
     local Text = Instance.new("TextLabel")
 
@@ -211,8 +202,6 @@ local function CreateNotification(player)
 
     Text.Parent = Frame
 
-
-
     task.delay(5,function()
 
         if ScreenGui then
@@ -223,21 +212,15 @@ local function CreateNotification(player)
 
 end
 
-
-
 Players.PlayerAdded:Connect(function(player)
 
     CreateNotification(player)
 
 end)
 
-
-
-
 -- ============================================
 -- ALERT USERNAME SYSTEM
 -- ============================================
-
 
 local AlertPlayers = {
 
@@ -321,16 +304,22 @@ local AlertPlayers = {
     "SLOREXXXX",
     "diepie201",
     "Stonesk1ng",
-    "t2lls"
+
+    -- NEW ALERT PLAYERS
+    "hunter123sir",
+    "Faye_4658",
+    "Vikingr_Doge",
+    "OmerGM",
 
 }
 
-
+-- ============================================
+-- ALERT PLAYER CHECK
+-- ============================================
 
 local function IsAlertPlayer(player)
 
     local username = string.lower(player.Name)
-
 
     for _,name in pairs(AlertPlayers) do
 
@@ -342,14 +331,13 @@ local function IsAlertPlayer(player)
 
     end
 
-
     return false
 
 end
--- ============================================
--- LOUD ALARM + ALERT POPUP
--- ============================================
 
+-- ============================================
+-- LOUD ALARM
+-- ============================================
 
 local function PlayAlarm()
 
@@ -362,7 +350,6 @@ local function PlayAlarm()
 
     Sound:Play()
 
-
     task.delay(8,function()
 
         if Sound then
@@ -373,20 +360,17 @@ local function PlayAlarm()
 
 end
 
-
-
-
+-- ============================================
+-- ALERT POPUP
+-- ============================================
 
 local function CreateAlert(player)
-
 
     local ScreenGui = Instance.new("ScreenGui")
 
     ScreenGui.Name = "ALERT_PLAYER"
     ScreenGui.ResetOnSpawn = false
     ScreenGui.Parent = game:GetService("CoreGui")
-
-
 
     local Frame = Instance.new("Frame")
 
@@ -396,19 +380,13 @@ local function CreateAlert(player)
     Frame.BorderSizePixel = 0
     Frame.Parent = ScreenGui
 
-
-
     local Corner = Instance.new("UICorner")
 
     Corner.CornerRadius = UDim.new(0,10)
 
     Corner.Parent = Frame
 
-
-
-
     local Text = Instance.new("TextLabel")
-
 
     Text.Size = UDim2.new(1,0,1,0)
 
@@ -420,16 +398,11 @@ local function CreateAlert(player)
 
     Text.Font = Enum.Font.GothamBold
 
-
     Text.Text =
         "⚠ ALERT PLAYER JOINED ⚠\n"
         ..player.Name
 
-
     Text.Parent = Frame
-
-
-
 
     task.delay(8,function()
 
@@ -443,41 +416,40 @@ local function CreateAlert(player)
 
 end
 
-
-
-
+-- ============================================
+-- ALERT PLAYER JOIN + AUTO KICK
+-- ============================================
 
 Players.PlayerAdded:Connect(function(player)
 
-
     if IsAlertPlayer(player) then
 
-
+        -- Play alarm
         PlayAlarm()
 
+        -- Show alert
         CreateAlert(player)
 
+        -- Give the alert a moment to appear
+        task.wait(0.5)
+
+        -- Kick YOURSELF from the server
+        Players.LocalPlayer:Kick(
+            "nigger detected: " .. player.Name
+        )
 
     end
 
-
 end)
-
-
-
-
 
 -- ============================================
 -- ANTI AFK
 -- ============================================
 
-
 wait(0.1)
-
 
 loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/hassanxzayn-lua/Anti-afk/main/antiafkbyhassanxzyn"
 ))()
-
 
 wait(0.1)
